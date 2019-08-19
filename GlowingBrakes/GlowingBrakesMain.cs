@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -10,12 +13,15 @@ namespace GlowingBrakes
     public class GlowingBrakesMain : Script
     {
         private List<GlowVehicle> _glowVehicles = null;
+        private List<VehicleConfig> _vehicleConfigs = null;
 
         public GlowingBrakesMain()
         {
             _glowVehicles = new List<GlowVehicle>();
+            _vehicleConfigs = new List<VehicleConfig>();
             Tick += OnTick;
             Aborted += OnAbort;
+            ReadConfigs();
         }
 
         private void OnAbort(object sourc, EventArgs e)
@@ -23,6 +29,26 @@ namespace GlowingBrakes
             foreach (var v in _glowVehicles)
             {
                 v.ClearPtfx();
+            }
+        }
+
+        private void ReadConfigs()
+        {
+            _vehicleConfigs.Clear();
+            var files = Directory.GetFiles(@"scripts\GlowingBrakes\Configs\");
+            XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
+            foreach (var file in files)
+            {
+                if (file.EndsWith(".xml"))
+                {
+                    FileStream fs = new FileStream(file, FileMode.Open);
+                    XmlReader reader = new XmlTextReader(fs);
+                    if (serializer.CanDeserialize(reader))
+                    {
+                        // why do i need to cast if it should already be able to figure out the return type
+                        _vehicleConfigs.Add((VehicleConfig)serializer.Deserialize(reader));
+                    }
+                }
             }
         }
 
@@ -53,7 +79,7 @@ namespace GlowingBrakes
                     continue;
                 if (!_glowVehicles.Exists(x => x.Vehicle == v))
                 {
-                    _glowVehicles.Add(new GlowVehicle(v));
+                    _glowVehicles.Add(new GlowVehicle(v, _vehicleConfigs));
                 }
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -8,9 +9,24 @@ namespace GlowingBrakes
     public class GlowVehicle
     {
         private readonly Vehicle _vehicle;
+        private readonly VehicleConfig _config;
 
-        public GlowVehicle(Vehicle vehicle)
+        // config is passed as reference, right?
+        public GlowVehicle(Vehicle vehicle, List<VehicleConfig> configs)
         {
+            bool found = false;
+            foreach(var config in configs)
+            {
+                if (Game.GenerateHash(config.Model) == vehicle.Model)
+                {
+                    _config = config;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                _config = new VehicleConfig();
+
             _vehicle = vehicle;
             CurrVelocity = Function.Call<Vector3>(Hash.GET_ENTITY_SPEED_VECTOR, Vehicle, true);
             LastVelocity = CurrVelocity;
@@ -80,7 +96,7 @@ namespace GlowingBrakes
 
             Vector3 p = _vehicle.Position;
 
-            var rotations = _vehicle.GetWheelRotations();
+            //var rotations = _vehicle.GetWheelRotations();
 
             for (int i = 0; i < 4; ++i)
             {
@@ -122,9 +138,9 @@ namespace GlowingBrakes
                         PtfxHandles[i] = Function.Call<int>(Hash._START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE,
                             "veh_rocket_boost",
                             _vehicle,
-                            0.06f, 0.0f, 0.0f,
-                            0.0f, 0.0f, 90.0f,
-                            boneIdxs[i], 1.375f,
+                            _config.Offset.X, _config.Offset.Y, _config.Offset.Z, //0.06f, 0.0f, 0.0f,
+                            _config.Rotation.X, _config.Rotation.Y, _config.Rotation.Z, //0.0f, 0.0f, 90.0f,
+                            boneIdxs[i], _config.PtfxSize, //1.375f,
                             false, false, false);
                         Function.Call(Hash.SET_PARTICLE_FX_LOOPED_EVOLUTION, PtfxHandles[i], "boost", 0.0f, 0);
                         Function.Call(Hash.SET_PARTICLE_FX_LOOPED_EVOLUTION, PtfxHandles[i], "charge", 1.0f, 0);
