@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using GTA;
+﻿using GTA;
 using GTA.Math;
 using GTA.Native;
+using System.Drawing;
 
 namespace GlowingBrakes
 {
