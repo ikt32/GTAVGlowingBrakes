@@ -184,7 +184,17 @@ namespace GlowingBrakes
                 // lmao hot
                 //float boostFire = BrakeTemps[i] > 0.66f ? ( BrakeTemps[i] - 0.66f )/0.33f: 0.0f;
                 //Function.Call(Hash.SET_PARTICLE_FX_LOOPED_EVOLUTION, PtfxHandles[i], "boost", boostFire, 0);
+                
+                // TODO: Re-enable when found ptfx with colorable disc
+                // rip for this ptfx
+                //Function.Call(Hash.SET_PARTICLE_FX_LOOPED_COLOUR, PtfxHandles[i],
+                //0.0f, //R
+                //0.0f, //G
+                //255.0f, //B 
+                //false);
 
+                //// Defunct - Less preferred method since it won't show in R* editor. Code should be working "enough",
+                //// so I'm just leaving this for future reference.
                 //// Drawing/Positioning marker
                 //float mult = GetDrawnWheelAngleMult(_vehicle);
                 //float actualAngle = steeredWheelAngles[i] * mult;
@@ -212,13 +222,6 @@ namespace GlowingBrakes
                 //    coord, dir, rot, 0.31f, color);
                 //DrawMarker(MarkerType.HorizontalCircleFat,
                 //    coord, dir, rot, 0.21f, color);
-
-                // rip for this ptfx
-                //Function.Call(Hash.SET_PARTICLE_FX_LOOPED_COLOUR, PtfxHandles[i],
-                //0.0f, //R
-                //0.0f, //G
-                //255.0f, //B 
-                //false);
             }
         }
     }

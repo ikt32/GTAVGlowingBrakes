@@ -16,14 +16,17 @@ namespace GlowingBrakes
     {
         private List<GlowVehicle> _glowVehicles = null;
         private List<VehicleConfig> _vehicleConfigs = null;
+        private Timer _timer = null;
 
         public GlowingBrakesMain()
         {
             _glowVehicles = new List<GlowVehicle>();
             _vehicleConfigs = new List<VehicleConfig>();
+            _timer = new Timer(500);
             Tick += OnTick;
             Aborted += OnAbort;
             ReadConfigs();
+            
         }
 
         private void OnAbort(object sourc, EventArgs e)
@@ -63,8 +66,7 @@ namespace GlowingBrakes
 
         private void OnTick(object source, EventArgs e)
         {
-            Vehicle[] allVehicles = World.GetAllVehicles();
-
+            // Clean up lists every tick so we don't ever work with an invalid vehicle.
             for (int i = 0; i < _glowVehicles.Count; ++i)
             {
                 bool exist = _glowVehicles[i].Vehicle.Exists();
@@ -80,16 +82,23 @@ namespace GlowingBrakes
                 }
             }
 
-            // Add newly discovered vehicles
-            foreach (var v in allVehicles)
+            if (_timer.Expired())
             {
-                if (v.GetNumWheels() != 4)
-                    continue;
-                if (World.GetDistance(Game.Player.Character.Position, v.Position) > GlowingBrakes.Settings.Get().DrawDistance)
-                    continue;
-                if (!_glowVehicles.Exists(x => x.Vehicle == v))
+                _timer.Reset();
+                // Add newly discovered vehicles periodically
+                Vehicle[] allVehicles = World.GetAllVehicles();
+                foreach (var v in allVehicles)
                 {
-                    _glowVehicles.Add(new GlowVehicle(v, _vehicleConfigs));
+                    if (v.GetNumWheels() != 4)
+                        continue;
+                    if (World.GetDistance(Game.Player.Character.Position, v.Position) > GlowingBrakes.Settings.Get().DrawDistance)
+                        continue;
+                    if (!v.EngineRunning)
+                        continue;
+                    if (!_glowVehicles.Exists(x => x.Vehicle == v))
+                    {
+                        _glowVehicles.Add(new GlowVehicle(v, _vehicleConfigs));
+                    }
                 }
             }
 

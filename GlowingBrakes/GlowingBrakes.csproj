@@ -49,6 +49,7 @@
     <Compile Include="MathExt.cs" />
     <Compile Include="Ptfx.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="VehicleConfig.cs" />
     <Compile Include="VehicleExtensions.cs" />
   </ItemGroup>
