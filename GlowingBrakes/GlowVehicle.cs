@@ -107,16 +107,26 @@ namespace GlowingBrakes
 
                 if (brakePressures[i] > 0.0f)
                 {
-                    targetVal = (brakePressures[i] + weightShiftFactor[i] / 40.0f) * Math.Abs(wheelRotSpeeds[i]);
+                    targetVal = (brakePressures[i] + weightShiftFactor[i] * _config.AccelerationMult) * Math.Abs(wheelRotSpeeds[i]);
                 }
                 targetVal = targetVal.Clamp(0.0f, 1.0f);
                 if (targetVal > 0.0f)
-                    BrakeTemps[i] = MathExt.Lerp(BrakeTemps[i], targetVal, 1.0f - (float)Math.Pow(0.100f, Game.LastFrameTime));
+                {
+                    float heatRate = _config.HeatRate;
+                    heatRate.Clamp(0.0f, 1.0f);
+
+                    BrakeTemps[i] = MathExt.Lerp(BrakeTemps[i], targetVal, 1.0f - (float)Math.Pow(1.0f - heatRate, Game.LastFrameTime));
+                }
                 else
                 {
-                    float coolRateMod = MathExt.Map(Math.Abs(wheelRotSpeeds[i]), 0.0f, 60.0f, 0.100f, -0.200f);
-                    coolRateMod = coolRateMod.Clamp(-200.0f, 100.0f);
-                    BrakeTemps[i] = MathExt.Lerp(BrakeTemps[i], 0.0f, 1.0f - (float)Math.Pow(0.800f + coolRateMod, Game.LastFrameTime));
+                    float coolRateMoving = _config.CoolRateMoving;
+                    coolRateMoving.Clamp(0.0f, 1.0f);
+                    float coolRateStopped = _config.CoolRateStopped;
+                    coolRateStopped.Clamp(0.0f, 1.0f);
+
+                    float coolRateMod = MathExt.Map(Math.Abs(wheelRotSpeeds[i]), 0.0f, 60.0f, 1.0f - coolRateStopped, 1.0f - coolRateMoving);
+                    coolRateMod = coolRateMod.Clamp(1.0f - coolRateMoving, 1.0f - coolRateStopped);
+                    BrakeTemps[i] = MathExt.Lerp(BrakeTemps[i], 0.0f, 1.0f - (float)Math.Pow(coolRateMod, Game.LastFrameTime));
                 }
 
                 BrakeTemps[i].Clamp(0.0f, 1.0f);
