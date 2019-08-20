@@ -123,7 +123,12 @@ namespace GlowingBrakes
                 if (float.IsNaN(BrakeTemps[i]))
                     BrakeTemps[i] = 0.0f;
 
-                //BrakeTemps[i] = 1.0f; //TODO: Temporary
+                // Set to always hot, for testing/positioning purposes.
+                if (Settings.Get().Debug)
+                {
+                    BrakeTemps[i] = 1.0f;
+                }
+
                 // Drawing ptfx
                 if (BrakeTemps[i] > 0.066f)
                 {

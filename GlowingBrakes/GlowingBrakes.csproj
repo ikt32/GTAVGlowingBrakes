@@ -48,6 +48,7 @@
     <Compile Include="GlowVehicle.cs" />
     <Compile Include="MathExt.cs" />
     <Compile Include="Ptfx.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="VehicleConfig.cs" />
     <Compile Include="VehicleExtensions.cs" />
   </ItemGroup>

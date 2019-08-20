@@ -10,21 +10,15 @@ namespace GlowingBrakes
     {
         public VehicleConfig()
         {
+            Model = "Model";
             PtfxSize = 1.375f;
             Offset = new Vector3(0.06f, 0.0f, 0.0f);
             Rotation = new Vector3(0.0f, 0.0f, 90.0f);
         }
 
-        [System.Xml.Serialization.XmlElement("Model")]
-        public String Model;
-
-        [System.Xml.Serialization.XmlElement("PtfxSize")]
+        public string Model;
         public float PtfxSize;
-
-        [System.Xml.Serialization.XmlElement("Offset")]
         public Vector3 Offset;
-
-        [System.Xml.Serialization.XmlElement("Rotation")]
         public Vector3 Rotation;
     }
 }
