@@ -38,7 +38,7 @@ namespace GlowingBrakes
             get { return _vehicle; }
         }
 
-        public float[] BrakeTemps = new float[4];
+        public float[] BrakeTemps = new float[4] { 0.0f, 0.0f, 0.0f, 0.0f };
 
         public int[] PtfxHandles = new int[4] { 0, 0, 0, 0 };
 
