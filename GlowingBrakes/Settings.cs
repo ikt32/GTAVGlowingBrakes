@@ -21,6 +21,7 @@ namespace GlowingBrakes
 
         public bool Debug = false;
         public float DrawDistance = 50.0f;
+        public List<string> IgnoredModels = new List<string>(){ "dump" };
 
         public static Settings Get() {
             return _instance;

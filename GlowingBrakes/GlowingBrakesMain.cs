@@ -91,9 +91,11 @@ namespace GlowingBrakes
                 {
                     if (v.GetNumWheels() != 4)
                         continue;
+                    if (!v.EngineRunning)
+                        continue;
                     if (World.GetDistance(Game.Player.Character.Position, v.Position) > GlowingBrakes.Settings.Get().DrawDistance)
                         continue;
-                    if (!v.EngineRunning)
+                    if (GlowingBrakes.Settings.Get().IgnoredModels.Exists(x => Game.GenerateHash(x) == v.Model))
                         continue;
                     if (!_glowVehicles.Exists(x => x.Vehicle == v))
                     {
