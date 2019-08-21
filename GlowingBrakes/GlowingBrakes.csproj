@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugUtils.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="GlowingBrakesMain.cs" />
     <Compile Include="GlowVehicle.cs" />
     <Compile Include="MathExt.cs" />

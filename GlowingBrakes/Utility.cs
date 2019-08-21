@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace GlowingBrakes
 {
-    static class DebugUtils
+    static class Utility
     {
         public static void DrawMarker(MarkerType marker, Vector3 pos, Vector3 dir, Vector3 rot, float scale, Color color)
         {
