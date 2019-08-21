@@ -2,14 +2,23 @@
 
 This is a small script that draws glowing brake disks.
 
+## Done
+
+* Settings
+  * Range
+  * Debug (Always draw discs)
+* Vehicle Configs
+  * Model
+  * Ptfx size
+  * Offset and rotation
+  * Heat rate, cool rate and heating balance
+
 ## Todo
 
-* Selectable range or specific vehicles
+* Vehicle blacklist
+* Wheel blacklist (drum brakes etc)
+* Separate front/rear offsets
 * Use ptfx (visible in editor) or draw a disk
-* Simple per-car settings for
-  * X-offset
-  * Heating up/cooling down parameters
-  * Heat haze visible/not visible (invert Z-axis)
 
 ## Building
 
