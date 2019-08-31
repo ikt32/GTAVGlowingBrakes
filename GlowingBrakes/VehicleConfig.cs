@@ -27,6 +27,7 @@ namespace GlowingBrakes
             CoolRateMoving = 0.2f;
             CoolRateStopped = 0.05f;
             AccelerationMult = 0.045f;
+            Visible = new List<bool>() {true, true, true, true};
         }
 
         public string Model;
@@ -40,5 +41,6 @@ namespace GlowingBrakes
         public float CoolRateMoving;
         public float CoolRateStopped;
         public float AccelerationMult;
+        public List<bool> Visible;
     }
 }

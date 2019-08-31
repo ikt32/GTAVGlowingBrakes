@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
@@ -53,12 +55,21 @@ namespace GlowingBrakes
                         if (serializer.CanDeserialize(reader))
                         {
                             // why do i need to cast if it should already be able to figure out the return type
-                            _vehicleConfigs.Add((VehicleConfig)serializer.Deserialize(reader));
+                            var cfg = (VehicleConfig) serializer.Deserialize(reader);
+
+                            UI.Notify(string.Format("{0}: V: {1}", cfg.Model, cfg.Visible.Count));
+
+                            if (cfg.Visible.Count < 4)
+                            {
+                                cfg.Visible = new List<bool>(4) {true, true, true, true};
+                                UI.Notify(string.Format("{0}: Visible count mismatch, fixing...", cfg.Model));
+                            }
+                            _vehicleConfigs.Add(cfg);
                         }
                     }
                     catch(Exception e)
                     {
-                        // Lazy error "handling", maybe consider logging later.
+                        UI.Notify(string.Format("{0} Read error: {1}", file, e.Message));
                     }
                 }
             }

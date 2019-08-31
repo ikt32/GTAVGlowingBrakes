@@ -110,6 +110,9 @@ namespace GlowingBrakes
 
             for (int i = 0; i < 4; ++i)
             {
+                if (!_config.Visible[i])
+                    continue;
+                
                 if (float.IsNaN(BrakeTemps[i]))
                     BrakeTemps[i] = 0.0f;
 
