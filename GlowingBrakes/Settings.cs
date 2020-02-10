@@ -21,7 +21,19 @@ namespace GlowingBrakes
 
         public bool Debug = false;
         public float DrawDistance = 50.0f;
-        public List<string> IgnoredModels = new List<string>(){ "dump" };
+        public List<string> IgnoredModels = new List<string>()
+        {
+            "dump"
+        };
+        public SerializableDictionary<string, uint> Offsets = 
+            new SerializableDictionary<string, uint>()
+        {
+            {"WheelsPtrOffset", 0},
+            {"WheelCountOffset", 0},
+            {"WheelAngularVelocityOffset", 0},
+            {"WheelSteeringAnglesOffset", 0},
+            {"WheelBrakePressureOffset", 0}
+        };
 
         public static Settings Get() {
             return _instance;

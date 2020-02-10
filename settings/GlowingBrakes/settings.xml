@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!--
+        When true, always show brakes glowing hot. Useful to set up a config!
+    -->
+    <Debug>false</Debug>
+    
+    <!--
+        Draw distance in whole meters. Cars outside this distance don't have glowing brakes.
+        Decrease for better performance.
+    -->
+    <DrawDistance>50</DrawDistance>
+    
+    <!--
+        If some vehicles shouldn't have glowey brakes, add them here.
+    -->
+    <IgnoredModels>
+        <string>dump</string>
+    </IgnoredModels>
+    
+    <!--
+        When the game gets updated and GlowingBrakes can't find an address/offset,
+        the offsets can be overridden with the offsets below.
+        Use decimals, not hex!
+        The current offsets are valid for b1868.
+    -->
+    <!--
+    <Offsets>
+        <item>
+            <key>
+                <string>WheelsPtrOffset</string>
+            </key>
+            <value>
+                <unsignedInt>3024</unsignedInt>
+            </value>
+        </item>
+        <item>
+            <key>
+                <string>WheelCountOffset</string>
+            </key>
+            <value>
+                <unsignedInt>3032</unsignedInt>
+            </value>
+        </item>
+        <item>
+            <key>
+                <string>WheelAngularVelocityOffset</string>
+            </key>
+            <value>
+                <unsignedInt>368</unsignedInt>
+            </value>
+        </item>
+        <item>
+            <key>
+                <string>WheelSteeringAnglesOffset</string>
+            </key>
+            <value>
+                <unsignedInt>460</unsignedInt>
+            </value>
+        </item>
+        <item>
+            <key>
+                <string>WheelBrakePressureOffset</string>
+            </key>
+            <value>
+                <unsignedInt>464</unsignedInt>
+            </value>
+        </item>
+    </Offsets>
+    -->
+</Settings>

@@ -1,12 +1,25 @@
-﻿using GTA;
+﻿using System;
+using System.Diagnostics;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 using System.Drawing;
+using System.Reflection;
 
 namespace GlowingBrakes
 {
     static class Utility
     {
+        public static string Version
+        {
+            get
+            {
+                Assembly asm = Assembly.GetExecutingAssembly();
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
+                return $"{fvi.ProductMajorPart}.{fvi.ProductMinorPart}.{fvi.ProductBuildPart}";
+            }
+        }
+
         public static void DrawMarker(MarkerType marker, Vector3 pos, Vector3 dir, Vector3 rot, float scale, Color color)
         {
             World.DrawMarker(marker, pos, dir, rot, new Vector3(scale, scale, scale), color);

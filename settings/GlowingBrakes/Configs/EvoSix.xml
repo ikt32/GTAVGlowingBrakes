@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VehicleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Model>cp9a</Model>
+  <!-- <DrawMode>Marker</DrawMode> -->
+  <MarkerSizeIn>0.22</MarkerSizeIn>
+  <MarkerSizeOut>0.31</MarkerSizeOut>
+  <PtfxSize>1.375</PtfxSize>
+  <Offset>
+    <X>-0.09</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </Offset>
+  <Rotation>
+    <X>00</X>
+    <Y>00</Y>
+    <Z>-90</Z>
+  </Rotation>
+  <HeatRate>0.05</HeatRate>
+  <CoolRateMoving>0.04</CoolRateMoving>
+  <CoolRateStopped>0.01</CoolRateStopped>
+  <AccelerationMult>0.045</AccelerationMult>
+  <Visible>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+  </Visible>
+</VehicleConfig>

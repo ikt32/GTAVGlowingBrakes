@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VehicleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Model>P306</Model>
+  <PtfxSize>1.425</PtfxSize>
+</VehicleConfig>

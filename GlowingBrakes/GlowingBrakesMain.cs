@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
@@ -22,13 +23,16 @@ namespace GlowingBrakes
 
         public GlowingBrakesMain()
         {
+            Logger.Clear();
+            Logger.Log(Logger.Level.INFO, $"Glowing Brakes {Utility.Version}");
+            Logger.Log(Logger.Level.INFO, $"Game version {Game.Version}");
             _glowVehicles = new List<GlowVehicle>();
             _vehicleConfigs = new List<VehicleConfig>();
             _timer = new Timer(500);
             Tick += OnTick;
             Aborted += OnAbort;
             ReadConfigs();
-            
+            VehicleExtensions.InitializeOffsets(GlowingBrakes.Settings.Get());
         }
 
         private void OnAbort(object sourc, EventArgs e)
@@ -57,19 +61,19 @@ namespace GlowingBrakes
                             // why do i need to cast if it should already be able to figure out the return type
                             var cfg = (VehicleConfig) serializer.Deserialize(reader);
 
-                            UI.Notify(string.Format("{0}: V: {1}", cfg.Model, cfg.Visible.Count));
+                            Logger.Log(Logger.Level.DEBUG, $"{cfg.Model}: V: {cfg.Visible.Count}");
 
                             if (cfg.Visible.Count < 4)
                             {
                                 cfg.Visible = new List<bool>(4) {true, true, true, true};
-                                UI.Notify(string.Format("{0}: Visible count mismatch, fixing...", cfg.Model));
+                                Logger.Log(Logger.Level.WARN, $"{cfg.Model}: Visible count mismatch, fixing...");
                             }
                             _vehicleConfigs.Add(cfg);
                         }
                     }
                     catch(Exception e)
                     {
-                        UI.Notify(string.Format("{0} Read error: {1}", file, e.Message));
+                        Logger.Log(Logger.Level.ERROR, $"{file} Read error: {e.Message}");
                     }
                 }
             }
@@ -126,6 +130,7 @@ namespace GlowingBrakes
             if (Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash("glowDefaults")))
             {
                 UI.Notify("Glowing Brakes\nWriting a default config.");
+                Logger.Log(Logger.Level.INFO, "Glowing Brakes\nWriting a default config.");
                 VehicleConfig cfg = new VehicleConfig();
                 XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
                 TextWriter writer = new StreamWriter(@"scripts\GlowingBrakes\Configs\defaultConfig.xml");

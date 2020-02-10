@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VehicleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Model>t20</Model>
+  <PtfxSize>1.40</PtfxSize>
+  <Offset>
+    <X>0.06</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </Offset>
+  <Rotation>
+    <X>00</X>
+    <Y>00</Y>
+    <Z>90</Z>
+  </Rotation>
+  <HeatRate>0.25</HeatRate>
+  <CoolRateMoving>0.2</CoolRateMoving>
+  <CoolRateStopped>0.05</CoolRateStopped>
+  <AccelerationMult>0.045</AccelerationMult>
+</VehicleConfig>

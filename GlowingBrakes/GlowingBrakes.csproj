@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo1.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="SerializableDictionary.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="GlowingBrakesMain.cs" />
     <Compile Include="GlowVehicle.cs" />
