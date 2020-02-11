@@ -41,6 +41,23 @@ namespace GlowingBrakes
         public float CoolRateMoving;
         public float CoolRateStopped;
         public float AccelerationMult;
+
+        // Because XmlSerializer was written while MSFT devs were doing crack
+        // https://stackoverflow.com/questions/13046474/xml-deserialization-appends-to-list
+        [XmlIgnore]
         public List<bool> Visible;
+
+        [XmlArray(ElementName = "Visible")]
+        public bool[] Dummy
+        {
+            get
+            {
+                return Visible.ToArray();
+            }
+            set
+            {
+                if (value != null && value.Length > 0) Visible = new List<bool>(value);
+            }
+        }
     }
 }
