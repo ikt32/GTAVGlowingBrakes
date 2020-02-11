@@ -1,0 +1,43 @@
+<b>Glowing Brake Discs</b>
+<i>We high performance GT cars now.</i>
+
+<b>Installation</b>
+You need to have ScriptHookVDotNet.
+Drop the <i>entire</i> <u>GlowingBrakes</u> folder into the scripts folder.
+
+<b>Usage and technical details</b>
+
+By default, <u>all</u> cars have glowing brake discs on all four wheels. Cars can be blacklisted if they should never have glowing brake discs. 
+
+For each car, it's possible to:
+<ul>
+  <li>specify which wheels can glow and which can not</li>
+  <li>correct the rotation, size and position of the effect</li>
+  <li>choose between if Particle FX or Marker is used for the effect</li>
+  <li>change how fast the brakes heat up and cool down</li>
+  <li>balance the heating ratios between front and back</li>
+</ul>
+
+The script uses data for each individual wheel to determine how much to heat up and cool down. Things that affect this are:
+
+<ul>
+  <li>wheel speed</li>
+  <li>wheel brake pressure</li>
+  <li>deceleration rate</li>
+</ul>
+
+For example, if the car constantly brakes in a left corner, leaning mostly on its front right wheel, that brake disc will glow red hot and the rear wheel(s) may stay dark. Conversely, if the handbrake is yanked very often, the rear brake discs start glowing red, and the fronts will stay cool.
+
+To perfectly align the brake disc effects with the brake disc model, the debug option in <b>settings.xml</b> can be enabled, which makes the brake discs always glow at the max brightness. 
+
+Since the script affects all cars in the world and not just the player car, the draw distance can be changed for better performance or for more cars being affected.
+
+Finally, a technical detail, the script tries to find the correct offsets to retrieve the wheel data. If for some reason an update breaks the offset finding, <b>settings.xml</b> can be used to manually specify the correct offsets.
+
+<b>Credits</b>
+
+<ul style="list-style-type:none">
+  <li>LeeC2202's <a href="http://gtavmodding.digital-essence.co.uk/modpages/GBD.html">work which got me interested in the first place</a></li>
+  <li><a href="https://gtaforums.com/topic/913796-mod-idea-red-hot-brake-discs/">Original request thread on GTAForums</a></li>
+  <li>Northwind_JME for the awesome screenshot</li>
+</ul>
