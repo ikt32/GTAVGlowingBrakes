@@ -63,6 +63,8 @@ namespace GlowingBrakes
                             Logger.Log(Logger.Level.DEBUG, $"{cfg.Model}: Visible.Count: {cfg.Visible.Count}");
                             _vehicleConfigs.Add(cfg);
                         }
+                        reader.Close();
+                        fs.Close();
                     }
                     catch(Exception e)
                     {
