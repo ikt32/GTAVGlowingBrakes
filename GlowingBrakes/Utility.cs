@@ -4,7 +4,9 @@ using GTA;
 using GTA.Math;
 using GTA.Native;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
+using System.Xml.Serialization;
 
 namespace GlowingBrakes
 {
@@ -18,6 +20,16 @@ namespace GlowingBrakes
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
                 return $"{fvi.ProductMajorPart}.{fvi.ProductMinorPart}.{fvi.ProductBuildPart}";
             }
+        }
+
+        public static void WriteDefaultsFile()
+        {
+            Logger.Log(Logger.Level.INFO, "Writing a default config.");
+            VehicleConfig cfg = new VehicleConfig();
+            XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
+            TextWriter writer = new StreamWriter(@"scripts\GlowingBrakes\Configs\defaultConfig.xml");
+            serializer.Serialize(writer, cfg);
+            writer.Close();
         }
 
         public static void DrawMarker(MarkerType marker, Vector3 pos, Vector3 dir, Vector3 rot, float scale, Color color)

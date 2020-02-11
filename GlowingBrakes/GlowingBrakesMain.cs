@@ -130,12 +130,7 @@ namespace GlowingBrakes
             if (Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash("glowDefaults")))
             {
                 UI.Notify("Glowing Brakes\nWriting a default config.");
-                Logger.Log(Logger.Level.INFO, "Glowing Brakes\nWriting a default config.");
-                VehicleConfig cfg = new VehicleConfig();
-                XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
-                TextWriter writer = new StreamWriter(@"scripts\GlowingBrakes\Configs\defaultConfig.xml");
-                serializer.Serialize(writer, cfg);
-                writer.Close();
+                Utility.WriteDefaultsFile();
             }
         }
     }
