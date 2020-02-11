@@ -2,7 +2,7 @@
 <i>We high performance GT cars now.</i>
 
 <b>Installation</b>
-You need to have ScriptHookVDotNet.
+You need to have <a href="https://github.com/crosire/scripthookvdotnet/releases">ScriptHookVDotNet</a>.
 Drop the <i>entire</i> <u>GlowingBrakes</u> folder into the scripts folder.
 
 <b>Usage and technical details</b>
@@ -34,6 +34,11 @@ Since the script affects all cars in the world and not just the player car, the 
 
 Finally, a technical detail, the script tries to find the correct offsets to retrieve the wheel data. If for some reason an update breaks the offset finding, <b>settings.xml</b> can be used to manually specify the correct offsets.
 
+<b>Notes</b>
+Only cars with 4 wheels are supported, because I use the wheel_lf/rf/lr/rr bones. If you know a nice scaleable way for the middle wheel bones, feel free to make a PR or explain it to me.
+
+<a href="https://github.com/E66666666/GTAVGlowingBrakes">Source code is on GitHub</a>, as usual.
+
 <b>Credits</b>
 
 <ul style="list-style-type:none">
@@ -41,3 +46,8 @@ Finally, a technical detail, the script tries to find the correct offsets to ret
   <li><a href="https://gtaforums.com/topic/913796-mod-idea-red-hot-brake-discs/">Original request thread on GTAForums</a></li>
   <li>Northwind_JME for the awesome screenshot</li>
 </ul>
+
+<b>Changelog</b>
+
+<b>v1.0.0</b>
+First release
