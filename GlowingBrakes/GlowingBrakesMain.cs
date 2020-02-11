@@ -60,14 +60,7 @@ namespace GlowingBrakes
                         {
                             // why do i need to cast if it should already be able to figure out the return type
                             var cfg = (VehicleConfig) serializer.Deserialize(reader);
-
-                            Logger.Log(Logger.Level.DEBUG, $"{cfg.Model}: V: {cfg.Visible.Count}");
-
-                            if (cfg.Visible.Count < 4)
-                            {
-                                cfg.Visible = new List<bool>(4) {true, true, true, true};
-                                Logger.Log(Logger.Level.WARN, $"{cfg.Model}: Visible count mismatch, fixing...");
-                            }
+                            Logger.Log(Logger.Level.DEBUG, $"{cfg.Model}: Visible.Count: {cfg.Visible.Count}");
                             _vehicleConfigs.Add(cfg);
                         }
                     }
