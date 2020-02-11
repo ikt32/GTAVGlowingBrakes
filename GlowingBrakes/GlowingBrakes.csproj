@@ -64,4 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)$(TargetName).dll" "D:\Games\Steam\steamapps\common\Grand Theft Auto V\scripts\GlowingBrakes\$(TargetName).dll"
+copy "$(TargetDir)$(TargetName).pdb" "D:\Games\Steam\steamapps\common\Grand Theft Auto V\scripts\GlowingBrakes\$(TargetName).pdb"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
