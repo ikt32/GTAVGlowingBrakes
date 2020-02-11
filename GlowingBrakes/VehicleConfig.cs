@@ -5,9 +5,49 @@ using GTA.Math;
 
 namespace GlowingBrakes
 {
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Xml;
+    using System.Xml.Serialization;
+
     [Serializable]
     public class VehicleConfig
     {
+        private static VehicleConfig loadedDefaultConfig = null;
+
+        public static void SetDefaultConfigFromFile()
+        {
+            string file = @"scripts\GlowingBrakes\Configs\defaultConfig.xml";
+            if (File.Exists(file))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
+                try
+                {
+                    FileStream fs = new FileStream(file, FileMode.Open);
+                    XmlReader reader = new XmlTextReader(fs);
+                    if (serializer.CanDeserialize(reader))
+                    {
+                        // why do i need to cast if it should already be able to figure out the return type
+                        loadedDefaultConfig = (VehicleConfig)serializer.Deserialize(reader);
+                        Logger.Log(Logger.Level.INFO, "Using custom defaultConfig.xml");
+                    }
+                    reader.Close();
+                    fs.Close();
+                }
+                catch (Exception e)
+                {
+                    Logger.Log(Logger.Level.ERROR, $"{file} Read error: {e.Message}");
+                    Logger.Log(Logger.Level.WARN, "Using hardcoded defaults");
+                }
+            }
+            else
+            {
+                Logger.Log(Logger.Level.INFO, "No defaultConfig.xml found - using hardcoded defaults");
+                Logger.Log(Logger.Level.INFO, "Default config written to defaultConfig.xml, check it out!");
+                Utility.WriteDefaultsFile();
+            }
+        }
+
         public enum DrawModes
         {
             Ptfx,
@@ -16,18 +56,37 @@ namespace GlowingBrakes
 
         public VehicleConfig()
         {
-            Model = "Model";
-            DrawMode = DrawModes.Ptfx;
-            PtfxSize = 1.375f;
-            MarkerSizeIn = 0.22f;
-            MarkerSizeOut = 0.31f;
-            Offset = new Vector3(0.06f, 0.0f, 0.0f);
-            Rotation = new Vector3(0.0f, 0.0f, 90.0f);
-            HeatRate = 0.25f;
-            CoolRateMoving = 0.2f;
-            CoolRateStopped = 0.05f;
-            AccelerationMult = 0.045f;
-            Visible = new List<bool>() {true, true, true, true};
+            if (loadedDefaultConfig != null)
+            {
+                Model = loadedDefaultConfig.Model;
+                DrawMode = loadedDefaultConfig.DrawMode;
+                PtfxSize = loadedDefaultConfig.PtfxSize;
+                MarkerSizeIn = loadedDefaultConfig.MarkerSizeIn;
+                MarkerSizeOut = loadedDefaultConfig.MarkerSizeOut;
+                Offset = loadedDefaultConfig.Offset;
+                Rotation = loadedDefaultConfig.Rotation;
+                HeatRate = loadedDefaultConfig.HeatRate;
+                CoolRateMoving = loadedDefaultConfig.CoolRateMoving;
+                CoolRateStopped = loadedDefaultConfig.CoolRateStopped;
+                AccelerationMult = loadedDefaultConfig.AccelerationMult;
+                Visible = new List<bool>(loadedDefaultConfig.Visible);
+            }
+            else
+            {
+                Model = "Model";
+                DrawMode = DrawModes.Ptfx;
+                PtfxSize = 1.375f;
+                MarkerSizeIn = 0.22f;
+                MarkerSizeOut = 0.31f;
+                Offset = new Vector3(0.06f, 0.0f, 0.0f);
+                Rotation = new Vector3(0.0f, 0.0f, 90.0f);
+                HeatRate = 0.25f;
+                CoolRateMoving = 0.2f;
+                CoolRateStopped = 0.05f;
+                AccelerationMult = 0.045f;
+                Visible = new List<bool>() { true, true, true, true };
+            }
+
         }
 
         public string Model;

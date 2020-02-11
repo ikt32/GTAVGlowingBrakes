@@ -31,6 +31,8 @@ namespace GlowingBrakes
             _timer = new Timer(500);
             Tick += OnTick;
             Aborted += OnAbort;
+
+            VehicleConfig.SetDefaultConfigFromFile();
             ReadConfigs();
             VehicleExtensions.InitializeOffsets(GlowingBrakes.Settings.Get());
         }
@@ -50,7 +52,7 @@ namespace GlowingBrakes
             XmlSerializer serializer = new XmlSerializer(typeof(VehicleConfig));
             foreach (var file in files)
             {
-                if (file.EndsWith(".xml"))
+                if (file.EndsWith(".xml") && !file.EndsWith("defaultConfig.xml"))
                 {
                     try
                     {
