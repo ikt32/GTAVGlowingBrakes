@@ -45,9 +45,9 @@ namespace GlowingBrakes
             Function.Call(Hash.SET_TEXT_WRAP, 0.0, 1.0);
             Function.Call(Hash.SET_TEXT_CENTRE, 0);
             Function.Call(Hash.SET_TEXT_OUTLINE, true);
-            Function.Call(Hash._SET_TEXT_ENTRY, "STRING");
-            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, text);
-            Function.Call(Hash._DRAW_TEXT, x, y);
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_DISPLAY_TEXT, "CELL_EMAIL_BCON");
+            Function.Call(Hash.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME, text);
+            Function.Call(Hash.END_TEXT_COMMAND_DISPLAY_TEXT, x, y);
         }
     }
 }

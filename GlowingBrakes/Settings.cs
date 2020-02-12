@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using GTA;
+using GTA.UI;
 
 namespace GlowingBrakes
 {
@@ -57,7 +58,7 @@ namespace GlowingBrakes
             }
             catch (System.IO.FileNotFoundException)
             {
-                UI.Notify("Glowing Brakes\nCouldn't find settings.xml, writing defaults.");
+                Notification.Show("Glowing Brakes\nCouldn't find settings.xml, writing defaults.");
                 Settings settings = new Settings();
                 XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                 TextWriter writer = new StreamWriter(file);

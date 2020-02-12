@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using GTA;
 using GTA.Math;
 using GTA.Native;
+using GTA.UI;
 
 namespace GlowingBrakes
 {
@@ -103,7 +104,7 @@ namespace GlowingBrakes
                 {
                     if (v.GetNumWheels() != 4)
                         continue;
-                    if (!v.EngineRunning)
+                    if (!v.IsEngineRunning)
                         continue;
                     if (World.GetDistance(Game.Player.Character.Position, v.Position) > GlowingBrakes.Settings.Get().DrawDistance)
                         continue;
@@ -124,9 +125,9 @@ namespace GlowingBrakes
             }
 
             // _HAS_CHEAT_STRING_JUST_BEEN_ENTERED
-            if (Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash("glowDefaults")))
+            if (Function.Call<bool>(Hash._HAS_CHEAT_STRING_JUST_BEEN_ENTERED, Game.GenerateHash("glowDefaults")))
             {
-                UI.Notify("Glowing Brakes\nWriting a default config.");
+                Notification.Show("Glowing Brakes\nWriting a default config.");
                 Utility.WriteDefaultsFile();
             }
         }

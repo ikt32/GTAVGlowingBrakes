@@ -139,7 +139,7 @@ namespace GlowingBrakes
                 "\x45\x0f\x57\xc9\xf3\x0f\x11\x83\x60\x01\x00\x00\xf3\x0f\x5c", "xxx?xxx???xxxxx",
                 8, 0xC);
 
-            if (Game.Version >= GameVersion.VER_1_0_1737_0_STEAM)
+            if (Game.Version >= GameVersion.v1_0_1737_0_Steam)
             {
                 GetAndSetOffset(settings, "WheelSteeringAnglesOffset",
                     "\x0F\x2F\x81\xBC\x01\x00\x00\x0F\x97\xC0\xEB\x00\xD1\x00", "xx???xxxxxx?x?",
@@ -152,7 +152,7 @@ namespace GlowingBrakes
                     3, 0);
             }
 
-            if (Game.Version >= GameVersion.VER_1_0_1737_0_STEAM)
+            if (Game.Version >= GameVersion.v1_0_1737_0_Steam)
             {
                 GetAndSetOffset(settings, "WheelBrakePressureOffset",
                     "\x0F\x2F\x81\xBC\x01\x00\x00\x0F\x97\xC0\xEB\x00\xD1\x00", "xx???xxxxxx?x?",

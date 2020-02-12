@@ -68,10 +68,10 @@ namespace GlowingBrakes
 
         public void DrawDisks()
         {
-            if (_vehicle.GetBoneIndex("wheel_lf") == -1) return;
-            if (_vehicle.GetBoneIndex("wheel_rf") == -1) return;
-            if (_vehicle.GetBoneIndex("wheel_lr") == -1) return;
-            if (_vehicle.GetBoneIndex("wheel_rr") == -1) return;
+            if (_vehicle.Bones["wheel_lf"].Index == -1) return;
+            if (_vehicle.Bones["wheel_rf"].Index == -1) return;
+            if (_vehicle.Bones["wheel_lr"].Index == -1) return;
+            if (_vehicle.Bones["wheel_rr"].Index == -1) return;
 
             // Coords for marker
             Vector3[] wheelCoords = new Vector3[4];
@@ -79,17 +79,17 @@ namespace GlowingBrakes
 
             if (_config.DrawMode == VehicleConfig.DrawModes.Marker)
             {
-                wheelCoords[0] = _vehicle.GetBoneCoord("wheel_lf");
-                wheelCoords[1] = _vehicle.GetBoneCoord("wheel_rf");
-                wheelCoords[2] = _vehicle.GetBoneCoord("wheel_lr");
-                wheelCoords[3] = _vehicle.GetBoneCoord("wheel_rr");
+                wheelCoords[0] = _vehicle.Bones["wheel_lf"].Position;
+                wheelCoords[1] = _vehicle.Bones["wheel_rf"].Position;
+                wheelCoords[2] = _vehicle.Bones["wheel_lr"].Position;
+                wheelCoords[3] = _vehicle.Bones["wheel_rr"].Position;
             }
             else
             {
-                boneIdxs[0] = _vehicle.GetBoneIndex("wheel_lf");
-                boneIdxs[1] = _vehicle.GetBoneIndex("wheel_rf");
-                boneIdxs[2] = _vehicle.GetBoneIndex("wheel_lr");
-                boneIdxs[3] = _vehicle.GetBoneIndex("wheel_rr");
+                boneIdxs[0] = _vehicle.Bones["wheel_lf"].Index;
+                boneIdxs[1] = _vehicle.Bones["wheel_rf"].Index;
+                boneIdxs[2] = _vehicle.Bones["wheel_lr"].Index;
+                boneIdxs[3] = _vehicle.Bones["wheel_rr"].Index;
             }
 
             // For marker
@@ -170,7 +170,7 @@ namespace GlowingBrakes
             float debugAngle = actualAngle - MathExt.DegToRad(90.0f);
             float steeringAngleRelX = (float) -Math.Sin(debugAngle);
             float steeringAngleRelY = (float) Math.Cos(debugAngle);
-            Vector3 forward = _vehicle.GetOffsetInWorldCoords(new Vector3(steeringAngleRelX, steeringAngleRelY, 0.0f));
+            Vector3 forward = _vehicle.GetOffsetPosition(new Vector3(steeringAngleRelX, steeringAngleRelY, 0.0f));
             Vector3 dir = forward - _vehicle.Position;
             Vector3 rot = new Vector3
             {
@@ -204,8 +204,8 @@ namespace GlowingBrakes
                     //while (!Function.Call<bool>(Hash.HAS_NAMED_PTFX_ASSET_LOADED, "veh_impexp_rocket"))
                     //    Wait(0);
 
-                    Function.Call(Hash._0x6C38AF3693A69A91, "veh_impexp_rocket"); //USE_PARTICLE_FX_ASSET
-                    PtfxHandles[i] = Function.Call<int>(Hash._START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE,
+                    Function.Call(Hash.USE_PARTICLE_FX_ASSET, "veh_impexp_rocket"); //USE_PARTICLE_FX_ASSET
+                    PtfxHandles[i] = Function.Call<int>(Hash.START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE,
                         "veh_rocket_boost",
                         _vehicle,
                         _config.Offset.X, _config.Offset.Y, _config.Offset.Z, //0.06f, 0.0f, 0.0f,
