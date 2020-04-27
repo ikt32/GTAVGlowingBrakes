@@ -37,6 +37,16 @@ namespace GlowingBrakes
             World.DrawMarker(marker, pos, dir, rot, new Vector3(scale, scale, scale), color);
         }
 
+        public static float Distance2(Vector3 a, Vector3 b)
+        {
+            return (a.X - b.X) * (a.X - b.X) + (b.Y - b.Y) * (b.Y - b.Y);
+        }
+
+        public static float Distance2(Entity a, Entity b)
+        {
+            return Distance2(a.Position, b.Position);
+        }
+
         public static void ShowText(float x, float y, string text, float size = 0.2f)
         {
             Function.Call(Hash.SET_TEXT_FONT, 0);

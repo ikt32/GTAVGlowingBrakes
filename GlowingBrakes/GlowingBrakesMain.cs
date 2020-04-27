@@ -61,7 +61,6 @@ namespace GlowingBrakes
                         XmlReader reader = new XmlTextReader(fs);
                         if (serializer.CanDeserialize(reader))
                         {
-                            // why do i need to cast if it should already be able to figure out the return type
                             var cfg = (VehicleConfig) serializer.Deserialize(reader);
                             Logger.Log(Logger.Level.DEBUG, $"{cfg.Model}: Visible.Count: {cfg.Visible.Count}");
                             _vehicleConfigs.Add(cfg);
@@ -79,15 +78,18 @@ namespace GlowingBrakes
 
         private void OnTick(object source, EventArgs e)
         {
+            float drawDistance = GlowingBrakes.Settings.Get().DrawDistance;
+            float drawDistance2 = drawDistance * drawDistance;
+
             // Clean up lists every tick so we don't ever work with an invalid vehicle.
             for (int i = 0; i < _glowVehicles.Count; ++i)
             {
                 bool exist = _glowVehicles[i].Vehicle.Exists();
-                float distance = 0.0f;
+                float distance2 = 0.0f;
                 if (exist)
-                    distance = World.GetDistance(Game.Player.Character.Position, _glowVehicles[i].Vehicle.Position);
+                    distance2 = Utility.Distance2(Game.Player.Character.Position, _glowVehicles[i].Vehicle.Position);
 
-                if (!exist || distance > GlowingBrakes.Settings.Get().DrawDistance)
+                if (!exist || distance2 > drawDistance2)
                 {
                     _glowVehicles[i].ClearPtfx();
                     _glowVehicles.RemoveAt(i);
@@ -102,11 +104,15 @@ namespace GlowingBrakes
                 Vehicle[] allVehicles = World.GetAllVehicles();
                 foreach (var v in allVehicles)
                 {
+                    if (v.ClassType == VehicleClass.Boats ||
+                        v.ClassType == VehicleClass.Helicopters ||
+                        v.ClassType == VehicleClass.Planes)
+                        continue;
                     if (v.GetNumWheels() != 4)
                         continue;
                     if (!v.IsEngineRunning)
                         continue;
-                    if (World.GetDistance(Game.Player.Character.Position, v.Position) > GlowingBrakes.Settings.Get().DrawDistance)
+                    if (Utility.Distance2(Game.Player.Character.Position, v.Position) > drawDistance2)
                         continue;
                     if (GlowingBrakes.Settings.Get().IgnoredModels.Exists(x => Game.GenerateHash(x) == v.Model))
                         continue;
