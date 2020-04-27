@@ -21,6 +21,7 @@ namespace GlowingBrakes
         private static readonly Settings _instance = Load();
 
         public bool Debug = false;
+        public bool PlayerOnly = false;
         public float DrawDistance = 50.0f;
         public List<string> IgnoredModels = new List<string>()
         {
@@ -50,7 +51,6 @@ namespace GlowingBrakes
                 XmlReader reader = new XmlTextReader(fs);
                 if (serializer.CanDeserialize(reader))
                 {
-                    // why do i need to cast if it should already be able to figure out the return type
                     return (Settings) serializer.Deserialize(reader);
                 }
 

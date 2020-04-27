@@ -76,7 +76,7 @@ namespace GlowingBrakes
             }
         }
 
-        private void OnTick(object source, EventArgs e)
+        private void UpdateVehicleListDistance()
         {
             float drawDistance = GlowingBrakes.Settings.Get().DrawDistance;
             float drawDistance2 = drawDistance * drawDistance;
@@ -116,12 +116,63 @@ namespace GlowingBrakes
                         continue;
                     if (GlowingBrakes.Settings.Get().IgnoredModels.Exists(x => Game.GenerateHash(x) == v.Model))
                         continue;
+
                     if (!_glowVehicles.Exists(x => x.Vehicle == v))
-                    {
                         _glowVehicles.Add(new GlowVehicle(v, _vehicleConfigs));
-                    }
                 }
             }
+        }
+
+        private void UpdateVehicleListPlayer()
+        {
+            Vehicle playerVehicle = Game.Player.Character.CurrentVehicle;
+
+            // Clean up lists every tick so we don't ever work with an invalid vehicle.
+            for (int i = 0; i < _glowVehicles.Count; ++i)
+            {
+                bool playerDifferentVehicle = false;
+                if (playerVehicle != null)
+                    playerDifferentVehicle = playerVehicle != _glowVehicles[i].Vehicle;
+
+                bool exist = _glowVehicles[i].Vehicle.Exists();
+
+                if (!exist || playerDifferentVehicle)
+                {
+                    _glowVehicles[i].ClearPtfx();
+                    _glowVehicles.RemoveAt(i);
+                    --i;
+                }
+            }
+
+            if (_timer.Expired())
+            {
+                _timer.Reset();
+                // Update player vehicle periodically
+
+                if (playerVehicle == null)
+                    return;
+                if (playerVehicle.ClassType == VehicleClass.Boats ||
+                    playerVehicle.ClassType == VehicleClass.Helicopters ||
+                    playerVehicle.ClassType == VehicleClass.Planes)
+                    return;
+                if (playerVehicle.GetNumWheels() != 4)
+                    return;
+                if (!playerVehicle.IsEngineRunning)
+                    return;
+                if (GlowingBrakes.Settings.Get().IgnoredModels.Exists(x => Game.GenerateHash(x) == playerVehicle.Model))
+                    return;
+
+                if (!_glowVehicles.Exists(x => x.Vehicle == playerVehicle))
+                    _glowVehicles.Add(new GlowVehicle(playerVehicle, _vehicleConfigs));
+            }
+        }
+
+        private void OnTick(object source, EventArgs e)
+        {
+            if (GlowingBrakes.Settings.Get().PlayerOnly)
+                UpdateVehicleListPlayer();
+            else
+                UpdateVehicleListDistance();
 
             // Glow
             foreach (var v in _glowVehicles)

@@ -6,6 +6,11 @@
     <Debug>false</Debug>
     
     <!--
+        Only enable for player car. Draw distance is ignored.
+    -->
+    <PlayerOnly>false</PlayerOnly>
+    
+    <!--
         Draw distance in whole meters. Cars outside this distance don't have glowing brakes.
         Decrease for better performance.
     -->
