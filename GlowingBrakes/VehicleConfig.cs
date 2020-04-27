@@ -60,10 +60,18 @@ namespace GlowingBrakes
             {
                 Model = loadedDefaultConfig.Model;
                 DrawMode = loadedDefaultConfig.DrawMode;
+
                 PtfxSize = loadedDefaultConfig.PtfxSize;
+                PtfxRearSize = loadedDefaultConfig.PtfxRearSize;
+                PtfxRearSizeOverride = loadedDefaultConfig.PtfxRearSizeOverride;
+
                 MarkerSizeIn = loadedDefaultConfig.MarkerSizeIn;
                 MarkerSizeOut = loadedDefaultConfig.MarkerSizeOut;
+                
                 Offset = loadedDefaultConfig.Offset;
+                OffsetRear = loadedDefaultConfig.OffsetRear;
+                OffsetRearOverride = loadedDefaultConfig.OffsetRearOverride;
+
                 Rotation = loadedDefaultConfig.Rotation;
                 HeatRate = loadedDefaultConfig.HeatRate;
                 CoolRateMoving = loadedDefaultConfig.CoolRateMoving;
@@ -75,10 +83,18 @@ namespace GlowingBrakes
             {
                 Model = "Model";
                 DrawMode = DrawModes.Ptfx;
+
                 PtfxSize = 1.375f;
+                PtfxRearSize = 1.375f;
+                PtfxRearSizeOverride = false;
+
                 MarkerSizeIn = 0.22f;
                 MarkerSizeOut = 0.31f;
+                
                 Offset = new Vector3(0.06f, 0.0f, 0.0f);
+                OffsetRear = new Vector3(0.06f, 0.0f, 0.0f);
+                OffsetRearOverride = false;
+
                 Rotation = new Vector3(0.0f, 0.0f, 90.0f);
                 HeatRate = 0.25f;
                 CoolRateMoving = 0.2f;
@@ -91,10 +107,18 @@ namespace GlowingBrakes
 
         public string Model;
         public DrawModes DrawMode;
+
         public float PtfxSize;
+        public float PtfxRearSize;
+        public bool PtfxRearSizeOverride;
+
         public float MarkerSizeIn;
         public float MarkerSizeOut;
+        
         public Vector3 Offset;
+        public Vector3 OffsetRear;
+        public bool OffsetRearOverride;
+
         public Vector3 Rotation;
         public float HeatRate;
         public float CoolRateMoving;

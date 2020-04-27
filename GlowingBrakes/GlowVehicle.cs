@@ -199,6 +199,18 @@ namespace GlowingBrakes
             {
                 if (PtfxHandles[i] == 0)
                 {
+                    Vector3 offset = _config.Offset;
+                    if (i >= 2 && _config.OffsetRearOverride)
+                    {
+                        offset = _config.OffsetRear;
+                    }
+
+                    float ptfxSize = _config.PtfxSize;
+                    if (i >= 2 && _config.PtfxRearSizeOverride)
+                    {
+                        ptfxSize = _config.PtfxRearSize;
+                    }
+
                     Ptfx.RequestEffectLibrary("veh_impexp_rocket");
                     //Function.Call(Hash.REQUEST_NAMED_PTFX_ASSET, "veh_impexp_rocket");
                     //while (!Function.Call<bool>(Hash.HAS_NAMED_PTFX_ASSET_LOADED, "veh_impexp_rocket"))
@@ -208,9 +220,9 @@ namespace GlowingBrakes
                     PtfxHandles[i] = Function.Call<int>(Hash.START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE,
                         "veh_rocket_boost",
                         _vehicle,
-                        _config.Offset.X, _config.Offset.Y, _config.Offset.Z, //0.06f, 0.0f, 0.0f,
+                        offset.X, offset.Y, offset.Z, //0.06f, 0.0f, 0.0f,
                         _config.Rotation.X, _config.Rotation.Y, _config.Rotation.Z, //0.0f, 0.0f, 90.0f,
-                        boneIdxs[i], _config.PtfxSize, //1.375f,
+                        boneIdxs[i], ptfxSize, //1.375f,
                         false, false, false);
                     Function.Call(Hash.SET_PARTICLE_FX_LOOPED_EVOLUTION, PtfxHandles[i], "boost", 0.0f, 0);
                     Function.Call(Hash.SET_PARTICLE_FX_LOOPED_EVOLUTION, PtfxHandles[i], "charge", 1.0f, 0);
